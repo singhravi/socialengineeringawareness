@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security Defense Hub | Social Engineering Prevention</title>
+    <style>
+      :root {
+        --primary: #1a365d;
+        --secondary: #2c5282;
+        --accent: #ed8936;
+        --danger: #c53030;
+        --light: #f7fafc;
+        --text: #2d3748;
+        --sidebar-width: 260px;
+        --header-height: 100px; /* Increased to fit subtitles */
+        --footer-height: 40px;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        background: #f0f2f5;
+      }
+
+      /* Fixed Top Header with Subtitle and Author */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-height);
+        background: var(--primary);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 2rem;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      header .subtitle {
+        margin: 2px 0;
+        font-size: 0.9rem;
+        color: #cbd5e0;
+        font-style: italic;
+      }
+      header .author {
+        margin: 0;
+        font-size: 0.8rem;
+        color: var(--accent);
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      /* Fixed Left Sidebar (Tabs) */
+      nav {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        bottom: var(--footer-height);
+        width: var(--sidebar-width);
+        background: var(--secondary);
+        display: flex;
+        flex-direction: column;
+        padding-top: 1rem;
+        z-index: 999;
+      }
+
+      nav button {
+        background: none;
+        border: none;
+        color: #cbd5e0;
+        padding: 1.2rem 1.5rem;
+        text-align: left;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border-left: 4px solid transparent;
+      }
+
+      nav button:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+      }
+      nav button.active {
+        background: rgba(255, 255, 255, 0.15);
+        border-left: 4px solid var(--accent);
+        color: white;
+        font-weight: bold;
+      }
+
+      /* Main Content Area */
+      main {
+        margin-top: var(--header-height);
+        margin-left: var(--sidebar-width);
+        margin-bottom: var(--footer-height);
+        flex: 1;
+        overflow-y: auto;
+        padding: 2.5rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .content-wrapper {
+        max-width: 850px;
+        width: 100%;
+      }
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      .tab-content.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      section {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 2rem;
+      }
+      h2 {
+        color: var(--primary);
+        border-bottom: 2px solid var(--primary);
+        padding-bottom: 10px;
+        margin-top: 0;
+      }
+
+      .sop-box {
+        border: 2px dashed var(--secondary);
+        padding: 1.5rem;
+        background: #f8fafc;
+        border-radius: 6px;
+      }
+      .highlight-box {
+        background: #fffaf0;
+        border-left: 5px solid var(--accent);
+        padding: 1.2rem;
+        margin: 1rem 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+      }
+      th,
+      td {
+        border: 1px solid #e2e8f0;
+        padding: 12px;
+        text-align: left;
+      }
+      th {
+        background: #edf2f7;
+        color: var(--primary);
+      }
+
+      .report-form {
+        background: #fff5f5;
+        border: 2px solid var(--danger);
+        border-radius: 8px;
+        padding: 2rem;
+      }
+      .form-group {
+        margin-bottom: 1.2rem;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cbd5e0;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .btn-submit {
+        background: var(--danger);
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+        font-size: 1.1rem;
+      }
+
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: var(--footer-height);
+        background: #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #4a5568;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🛡️ Corporate Security Hub</h1>
+      <p class="subtitle">
+        An Internal Framework for Defending Against Digital Manipulation &
+        Social Engineering
+      </p>
+      <p class="author">Developed by: IT Security & Compliance Team</p>
+    </header>
+
+    <nav id="sidebar">
+      <button class="tab-link active" onclick="openTab(event, 'threats')">
+        Threat Landscape
+      </button>
+      <button class="tab-link" onclick="openTab(event, 'sop')">
+        Employee SOP
+      </button>
+      <button class="tab-link" onclick="openTab(event, 'executive')">
+        Executive Protocol
+      </button>
+      <button class="tab-link" onclick="openTab(event, 'admin')">
+        IT Admin Checklist
+      </button>
+      <button class="tab-link" onclick="openTab(event, 'report')">
+        🚨 Report Incident
+      </button>
+    </nav>
+
+    <main>
+      <div class="content-wrapper">
+        <div id="threats" class="tab-content active">
+          <section>
+            <h2>1. The Threat Landscape: Attack Tools</h2>
+            <p>
+              Knowledge of common free tools is our first line of defense. Below
+              is how they are weaponized:
+            </p>
+
+            <table>
+              <tr>
+                <th>Tool</th>
+                <th>Fraudulent Use</th>
+                <th>Defense</th>
+              </tr>
+              <tr>
+                <td><strong>Web Browser</strong></td>
+                <td>OSINT & Site Cloning</td>
+                <td>Verify URLs, check SSL certificates.</td>
+              </tr>
+              <tr>
+                <td><strong>Thunderbird</strong></td>
+                <td>Spoofing Identities</td>
+                <td>Flag [EXTERNAL] email headers.</td>
+              </tr>
+              <tr>
+                <td><strong>ExifTool</strong></td>
+                <td>Metadata Scraped from PDF/JPG</td>
+                <td>Scrub files before sharing.</td>
+              </tr>
+              <tr>
+                <td><strong>Audacity</strong></td>
+                <td>Cleaning Audio for Voice Clones</td>
+                <td>Use Safe Word verification protocol.</td>
+              </tr>
+            </table>
+          </section>
+        </div>
+
+        <div id="sop" class="tab-content">
+          <section>
+            <h2>2. Employee STOP Protocol</h2>
+            <div class="sop-box">
+              <h3>SOP-SEC-01: Incident Identification</h3>
+              <ul>
+                <li>
+                  <strong>S - SKEPTICISM:</strong> Spot red flags like urgency
+                  or odd phrasing.
+                </li>
+                <li>
+                  <strong>T - TRACE:</strong> Verify identity via a secondary
+                  channel (Slack/Known Phone).
+                </li>
+                <li>
+                  <strong>O - OBSTRUCT:</strong> Do not click links or share
+                  credentials.
+                </li>
+                <li>
+                  <strong>P - PREVENT:</strong> Report the attempt to IT
+                  Security immediately.
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <div id="executive" class="tab-content">
+          <section>
+            <h2>3. Executive Safe Word Protocol</h2>
+            <div class="highlight-box">
+              <strong>Protocol:</strong> Challenge any voice-based financial
+              request with a pre-set secret question. No correct Safe Word = No
+              Action taken.
+            </div>
+            <h3>Challenge Examples</h3>
+            <ul>
+              <li>"What was the team's Q3 project color code?"</li>
+              <li>"What is the designated safe city for this month?"</li>
+            </ul>
+          </section>
+        </div>
+
+        <div id="admin" class="tab-content">
+          <section>
+            <h2>4. IT/Admin Response Checklist</h2>
+            <ul>
+              <li>
+                [ ] <strong>Isolate:</strong> Purge suspicious email from all
+                inboxes.
+              </li>
+              <li>
+                [ ] <strong>Monitor:</strong> Review logs for "Impossible
+                Travel" logins.
+              </li>
+              <li>
+                [ ] <strong>Remediate:</strong> Force password resets if
+                credentials were exposed.
+              </li>
+              <li>
+                [ ] <strong>Block:</strong> Blacklist sender IPs and Domains.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <div id="report" class="tab-content">
+          <div class="report-form">
+            <h2>🚨 Urgent Incident Report</h2>
+            <form
+              action="mailto:security@company.com"
+              method="post"
+              enctype="text/plain"
+            >
+              <div class="form-group">
+                <label>Name</label><input type="text" name="Name" required />
+              </div>
+              <div class="form-group">
+                <label>Nature of Threat</label
+                ><select name="Type">
+                  <option>Phishing</option>
+                  <option>Vishing</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Details</label
+                ><textarea name="Details" rows="4" required></textarea>
+              </div>
+              <button type="submit" class="btn-submit">
+                SUBMIT PRIORITY REPORT
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      © 2026 Internal Security Portal | Strictly Confidential | [Company Name]
+    </footer>
+
+    <script>
+      function openTab(evt, tabName) {
+        var i, tabContent, tabLinks;
+        tabContent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabContent.length; i++) {
+          tabContent[i].classList.remove("active");
+        }
+        tabLinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tabLinks.length; i++) {
+          tabLinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
