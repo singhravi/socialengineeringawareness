@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Security Defense Hub | Social Engineering Prevention</title>
     <style>
       :root {
@@ -16,6 +16,11 @@
         --header-height: 100px; /* Increased to fit subtitles */
         --footer-height: 40px;
       }
+
+      img, video, iframe {
+    max-width: 100%;
+    height: auto;
+}
 
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -109,6 +114,51 @@
         display: flex;
         justify-content: center;
       }
+
+      .container, #main-wrapper, .wrapper {
+    width: 95% !important;
+    max-width: 1200px; /* Or whatever your design width was */
+    margin: 0 auto;
+}
+      @media screen and (max-width: 768px) {
+    /* Stack sidebars or columns vertically */
+    .column, .sidebar, .content {
+        width: 100% !important;
+        float: none !important;
+        padding: 10px 0;
+    }
+
+    /* Adjust Navigation Menu for Mobile */
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    /* Adjust font sizes for readability */
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    body {
+        font-size: 16px;
+    }
+}
+
+      @media screen and (max-width: 480px) {
+    .header-text {
+        font-size: 1.2rem;
+    }
+    
+    /* Remove large margins/paddings that waste space */
+    body {
+        padding: 5px;
+    }
+}
 
       .content-wrapper {
         max-width: 850px;
